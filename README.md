@@ -95,5 +95,13 @@ DeckTalk is built using lightweight, modern web technologies without heavy frame
 - Added selected useful amounts: twenty, fifty, one hundred, five hundred, one thousand, ten thousand, one lakh, and one million (ten lakh).
 - Verified several forms against Malayalam Wiktionary entries; transliterations use learner-friendly romanization.
 
+### Step 7: Transport and route phrases
+
+- Added practical bus/train selection, destination, route, getting-off, and taxi/auto-rickshaw phrases to the existing Transport & Navigation category.
+- These phrase translations are learner-oriented drafts and should be checked by a Malayalam speaker before treating them as authoritative.
+- Updated "How do I get to [place]?" using the Malayalam wording and transliteration supplied by the user.
+- Updated "Take me to [place]." using the Malayalam wording and transliteration supplied by the user.
+- Updated "Does this bus go to [place]?" using the Malayalam wording and transliteration supplied by the user.
+
 
 
