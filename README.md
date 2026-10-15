@@ -70,3 +70,14 @@ DeckTalk is built using lightweight, modern web technologies without heavy frame
 - Simplified the card action label to "Tap to reveal" / "Tap to hide".
 - Audio playback, offline caching, and additional language packs have not been implemented yet.
 
+### Step 4: Flashcard flip animation
+
+- Changed the reveal interaction to flip the card between the English prompt and Malayalam answer.
+- Preserved keyboard activation and added accessible labels for the current flip action.
+- Respects the device's reduced-motion preference.
+- Set the flip container to a block box so the positioned card faces have a defined area.
+- Restored the front face's original padding and prompt/reveal spacing.
+- Added midpoint visibility switching so the front and back content cannot overlap during the flip.
+- Shortened the flip duration from 550 ms to 350 ms and aligned the visibility handoff to its midpoint.
+
+

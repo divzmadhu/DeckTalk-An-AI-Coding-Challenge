@@ -38,14 +38,20 @@
                 <div class="card-topline">
                     <span class="card-category" id="card-category"></span>
                 </div>
-                <button class="card-content" id="reveal-button" type="button" aria-expanded="false">
-                    <span class="word-label" id="word-label">HOW DO YOU SAY</span>
-                    <span class="word-prompt" id="word-prompt"></span>
-                    <span class="translation" id="translation" hidden>
-                        <span class="malayalam-word" id="malayalam-word" lang="ml"></span>
-                        <span class="transliteration" id="transliteration"></span>
+                <button class="card-content" id="reveal-button" type="button" aria-expanded="false" aria-label="Tap to reveal Malayalam translation">
+                    <span class="card-inner">
+                        <span class="card-face card-face-front" id="card-front" aria-hidden="false">
+                            <span class="word-label" id="word-label">HOW DO YOU SAY</span>
+                            <span class="word-prompt" id="word-prompt"></span>
+                            <span class="reveal-copy">Tap to reveal</span>
+                        </span>
+                        <span class="card-face card-face-back" id="card-back" aria-hidden="true">
+                            <span class="word-label">MALAYALAM</span>
+                            <span class="malayalam-word" id="malayalam-word" lang="ml"></span>
+                            <span class="transliteration" id="transliteration"></span>
+                            <span class="reveal-copy">Tap to hide</span>
+                        </span>
                     </span>
-                    <span class="reveal-copy" id="reveal-copy">Tap to reveal</span>
                 </button>
                 <div class="card-bottomline">
                     <span>ENGLISH <span aria-hidden="true">→</span> MALAYALAM</span>

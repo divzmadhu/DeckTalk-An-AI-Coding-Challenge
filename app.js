@@ -52,11 +52,11 @@ const cardCategory = document.querySelector("#card-category");
 const cardProgress = document.querySelector("#card-progress");
 const wordPrompt = document.querySelector("#word-prompt");
 const wordLabel = document.querySelector("#word-label");
-const translation = document.querySelector("#translation");
 const malayalamWord = document.querySelector("#malayalam-word");
 const transliteration = document.querySelector("#transliteration");
 const revealButton = document.querySelector("#reveal-button");
-const revealCopy = document.querySelector("#reveal-copy");
+const cardFront = document.querySelector("#card-front");
+const cardBack = document.querySelector("#card-back");
 const previousButton = document.querySelector("#previous-button");
 const nextButton = document.querySelector("#next-button");
 const nextItemLabel = document.querySelector("#next-item-label");
@@ -77,8 +77,11 @@ function renderCard() {
     nextItemLabel.textContent = activeModule.item;
     malayalamWord.textContent = card.malayalam;
     transliteration.textContent = card.transliteration;
-    translation.hidden = !isRevealed;
-    revealCopy.textContent = isRevealed ? "Tap to hide" : "Tap to reveal";
+    cardFront.setAttribute("aria-hidden", String(isRevealed));
+    cardBack.setAttribute("aria-hidden", String(!isRevealed));
+    revealButton.setAttribute("aria-label", isRevealed
+        ? "Tap to hide Malayalam translation"
+        : "Tap to reveal Malayalam translation");
 }
 
 function updateCategoryOptions() {
