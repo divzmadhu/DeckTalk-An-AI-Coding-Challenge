@@ -56,8 +56,23 @@ a:focus-visible {
 }
 
 .app-header {
+    position: relative;
     flex: 0 0 68px;
     border-bottom: 1px solid var(--line);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: clamp(10px, 2vw, 22px);
+}
+
+.brand-lockup {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
 }
 
 .brand {
@@ -72,8 +87,17 @@ a:focus-visible {
     color: #d69c58;
 }
 
+.brand-tagline {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
 .language-label,
-.eyebrow,
 .card-topline,
 .card-bottomline,
 .app-footer {
@@ -84,6 +108,73 @@ a:focus-visible {
 
 .language-label {
     color: var(--muted);
+}
+
+.header-menu {
+    position: relative;
+}
+
+.header-menu > summary,
+.header-home {
+    padding: 8px 10px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    color: #405047;
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    list-style: none;
+}
+
+.header-menu > summary::-webkit-details-marker {
+    display: none;
+}
+
+.header-menu > summary::after {
+    margin-left: 8px;
+    content: "▾";
+}
+
+.header-menu[open] > summary,
+.header-menu > summary:hover,
+.header-home:hover {
+    background: #f1f3ec;
+}
+
+.header-menu-content {
+    position: absolute;
+    z-index: 5;
+    top: calc(100% + 8px);
+    right: 0;
+    display: grid;
+    min-width: 190px;
+    gap: 2px;
+    padding: 6px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fffefa;
+    box-shadow: 0 8px 24px rgb(38 53 46 / 12%);
+}
+
+.header-menu-content button {
+    padding: 10px 12px;
+    border: 0;
+    border-radius: 5px;
+    color: #405047;
+    background: transparent;
+    cursor: pointer;
+    font-size: 0.82rem;
+    text-align: left;
+}
+
+.header-menu-content button:hover {
+    background: #f1f3ec;
+}
+
+.header-menu[hidden],
+.header-home[hidden] {
+    display: none;
 }
 
 .learning-area {
@@ -100,20 +191,16 @@ a:focus-visible {
 .intro {
     margin-bottom: 16px;
     text-align: center;
-}
-
-.eyebrow {
-    margin: 0 0 8px;
-    color: var(--green);
+    transform: translateY(-12px);
 }
 
 h1 {
     margin: 0;
     color: #23372d;
-    font-family: "Playfair Display", Georgia, serif;
-    font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+    font-family: "DM Sans", sans-serif;
+    font-size: clamp(1.55rem, 3.2vw, 2.1rem);
     font-weight: 500;
-    letter-spacing: -0.045em;
+    letter-spacing: 0.015em;
     line-height: 1.12;
 }
 
@@ -128,19 +215,28 @@ h1 {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 12px;
+    gap: 8px 12px;
+    margin-bottom: 10px;
     color: var(--muted);
     font-size: 0.82rem;
 }
 
-.deck-toolbar label {
+.filter-group {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 6px;
+}
+
+.filter-group label {
+    flex: 0 0 auto;
     font-weight: 600;
 }
 
-.deck-toolbar select {
-    min-height: 36px;
-    padding: 0 30px 0 10px;
+.filter-group select {
+    min-width: 0;
+    min-height: 34px;
+    padding: 0 24px 0 8px;
     border: 1px solid var(--line);
     border-radius: 5px;
     color: #34443b;
@@ -148,19 +244,68 @@ h1 {
     cursor: pointer;
 }
 
-.deck-toolbar input {
-    width: min(100%, 180px);
-    min-height: 36px;
-    padding: 0 10px;
+.filter-group:first-child select {
+    max-width: 165px;
+}
+
+.filter-group:nth-child(2) select {
+    max-width: 150px;
+}
+
+.search-field {
+    position: relative;
+    min-width: 120px;
+    flex: 1 1 130px;
+}
+
+.search-icon {
+    position: absolute;
+    top: 50%;
+    left: 9px;
+    display: flex;
+    width: 16px;
+    height: 16px;
+    color: var(--muted);
+    pointer-events: none;
+    transform: translateY(-50%);
+}
+
+.search-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-width: 1.7;
+}
+
+.search-field input {
+    width: 100%;
+    min-height: 34px;
+    padding: 0 10px 0 32px;
     border: 1px solid var(--line);
     border-radius: 5px;
     color: #34443b;
     background: #fff;
 }
 
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
 .progress {
-    margin: 0 0 0 auto;
+    width: 100%;
+    margin: 0;
     font-variant-numeric: tabular-nums;
+    text-align: right;
 }
 
 .flashcard {
@@ -414,26 +559,154 @@ h1 {
 }
 
 .manage-area {
-    width: min(100%, 620px);
-    margin: 0 auto 10px;
-    flex: 0 0 auto;
+    display: none;
 }
 
-.manage-area details {
+.app.is-managing .learning-area {
+    display: none;
+}
+
+.app.is-managing .manage-area {
+    display: flex;
+    width: min(100%, 760px);
+    flex: 0 1 auto;
+    margin: auto;
+}
+
+.manage-content {
+    width: 100%;
+    padding: 16px 20px 22px;
     border: 1px solid var(--line);
     border-radius: 8px;
     background: #fffefa;
 }
 
-.manage-area summary {
-    padding: 10px 14px;
-    color: var(--deep-green);
-    cursor: pointer;
-    font-weight: 700;
+.app.is-managing .manage-content {
+    flex: 0 1 auto;
 }
 
-.manage-content {
-    padding: 0 20px 22px;
+.help-dialog {
+    width: min(90vw, 540px);
+    max-height: min(85vh, 680px);
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    color: #26352e;
+    background: #fffefa;
+    box-shadow: 0 16px 48px rgb(38 53 46 / 18%);
+    line-height: 1.6;
+}
+
+.help-dialog::backdrop {
+    background: rgb(24 35 29 / 45%);
+}
+
+.help-dialog-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.help-dialog-heading h2,
+.help-dialog h3 {
+    color: #23372d;
+}
+
+.help-dialog-heading h2 {
+    margin: 0;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 1.45rem;
+    font-weight: 500;
+}
+
+.help-dialog h3 {
+    margin: 18px 0 4px;
+    font-size: 0.95rem;
+}
+
+.help-dialog p,
+.help-dialog ul {
+    margin: 10px 0;
+}
+
+.help-dialog ul {
+    padding-left: 22px;
+}
+
+.management-menu {
+    display: grid;
+    max-width: 440px;
+    gap: 10px;
+    margin: 0 auto;
+}
+
+.management-menu h2 {
+    margin: 0 0 6px;
+    color: #23372d;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 1.45rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+.management-view[hidden],
+.management-menu[hidden] {
+    display: none;
+}
+
+.management-view > .manage-form {
+    max-width: 620px;
+    margin: 0 auto 12px;
+}
+
+.management-back {
+    justify-self: center;
+    padding: 8px 10px;
+    border: 0;
+    color: var(--muted);
+    background: transparent;
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.82rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.management-view > .management-back {
+    display: block;
+    margin: 12px auto 0;
+}
+
+.deck-picker {
+    display: grid;
+    max-width: 620px;
+    grid-template-columns: minmax(0, 1fr) auto auto auto;
+    align-items: end;
+    gap: 8px;
+    margin: 0 auto 16px;
+}
+
+.deck-picker label {
+    grid-column: 1 / -1;
+    color: #59655d;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.deck-picker select {
+    width: 100%;
+    min-height: 40px;
+    padding: 8px 10px;
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    color: #34443b;
+    background: #fff;
+}
+
+.rename-deck-form {
+    max-width: 620px;
+    margin: 0 auto;
 }
 
 .manage-section {
@@ -533,7 +806,7 @@ h1 {
 .managed-card-list {
     display: grid;
     gap: 8px;
-    max-height: 360px;
+    max-height: min(280px, 42vh);
     margin: 0;
     padding: 0;
     overflow-y: auto;
@@ -541,39 +814,64 @@ h1 {
 }
 
 .managed-card-list li {
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 10px;
-    border: 1px solid var(--line);
-    border-radius: 5px;
-    background: #fff;
+    gap: 8px 12px;
+    padding: 10px 12px;
+    border: 1px solid #e9e9df;
+    border-radius: 7px;
+    background: linear-gradient(135deg, #fff 0%, #fcfbf6 100%);
 }
 
 .managed-card-summary {
+    display: grid;
     min-width: 0;
-    color: #34443b;
-    font-size: 0.82rem;
-    line-height: 1.45;
+    gap: 5px;
     overflow-wrap: anywhere;
 }
 
+.managed-card-english {
+    color: #2d3d33;
+    font-size: 0.88rem;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.managed-card-details {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px 9px;
+    color: var(--muted);
+    font-size: 0.76rem;
+    line-height: 1.4;
+}
+
+.managed-card-malayalam {
+    color: #506157;
+    font-family: "Noto Sans Malayalam", "Nirmala UI", sans-serif;
+}
+
+.managed-card-category {
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: #f0f2eb;
+    font-size: 0.66rem;
+    font-weight: 600;
+}
+
 .managed-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
     flex-shrink: 0;
 }
 
 .managed-card-actions .button {
-    min-height: 36px;
-    padding: 0 10px;
-    font-size: 0.78rem;
-}
-
-.keyboard-hint {
-    margin: 10px 0 0;
-    color: var(--muted);
-    font-size: 0.78rem;
-    text-align: center;
+    min-height: 32px;
+    padding: 0 8px;
+    font-size: 0.74rem;
 }
 
 .app-footer {
@@ -606,22 +904,29 @@ h1 {
 
     .deck-toolbar {
         display: grid;
-        grid-template-columns: auto minmax(0, 1fr);
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
         gap: 8px;
     }
 
-    .deck-toolbar select {
-        min-width: 0;
-        padding: 0 6px;
+    .filter-group {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 4px;
     }
 
-    .deck-toolbar input {
+    .filter-group select,
+    .filter-group:first-child select,
+    .filter-group:nth-child(2) select {
         width: 100%;
+        max-width: none;
+    }
+
+    .search-field {
+        grid-column: 1 / -1;
     }
 
     .progress {
-        grid-column: 2;
-        justify-self: end;
+        grid-column: 1 / -1;
     }
 
     .flashcard {
@@ -658,9 +963,16 @@ h1 {
         padding: 0 14px 16px;
     }
 
-    .managed-card-list li {
-        align-items: flex-start;
-        flex-direction: column;
+
+}
+
+@media (max-width: 420px) {
+    .header-actions {
+        gap: 6px;
+    }
+
+    .language-label {
+        display: none;
     }
 }
 
@@ -689,10 +1001,6 @@ h1 {
 
     .button {
         min-height: 40px;
-    }
-
-    .keyboard-hint {
-        margin-top: 6px;
     }
 
     .app-footer {

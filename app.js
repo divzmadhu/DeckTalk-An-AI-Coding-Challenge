@@ -10,7 +10,17 @@
 
 const storageKey = "decktalk-study-data-v1";
 const seedDecks = malayalamModules;
+const app = document.querySelector(".app");
+const headerMenu = document.querySelector("#header-menu");
+const headerMenuSummary = headerMenu.querySelector("summary");
+const openManagementDecksButton = document.querySelector("#open-management-decks-button");
+const openManagementCardsButton = document.querySelector("#open-management-cards-button");
+const homeButton = document.querySelector("#home-button");
+const openHelpButton = document.querySelector("#open-help-button");
+const helpDialog = document.querySelector("#help-dialog");
+const closeHelpButton = document.querySelector("#close-help-button");
 const moduleFilter = document.querySelector("#module-filter");
+const manageDeckFilter = document.querySelector("#manage-deck-filter");
 const categoryFilter = document.querySelector("#category-filter");
 const cardSearch = document.querySelector("#card-search");
 const cardCategories = document.querySelectorAll(".card-category");
@@ -26,7 +36,6 @@ const flashcard = document.querySelector("#flashcard");
 const previousButton = document.querySelector("#previous-button");
 const nextButton = document.querySelector("#next-button");
 const shuffleButton = document.querySelector("#shuffle-button");
-const nextItemLabel = document.querySelector("#next-item-label");
 const storageStatus = document.querySelector("#storage-status");
 const flashcardStatus = document.querySelector("#flashcard-status");
 const createDeckForm = document.querySelector("#create-deck-form");
@@ -35,7 +44,17 @@ const newDeckItem = document.querySelector("#new-deck-item");
 const renameDeckForm = document.querySelector("#rename-deck-form");
 const deckName = document.querySelector("#deck-name");
 const deleteDeckButton = document.querySelector("#delete-deck-button");
-const deckManagementDetails = document.querySelector("#deck-management-details");
+const updateDeckButton = document.querySelector("#update-deck-button");
+const cancelDeckUpdateButton = document.querySelector("#cancel-deck-update");
+const deckManagementView = document.querySelector("#deck-management-view");
+const createDeckView = document.querySelector("#create-deck-view");
+const cardEntryView = document.querySelector("#card-entry-view");
+const existingCardsView = document.querySelector("#existing-cards-view");
+const openCreateDeckButton = document.querySelector("#open-create-deck");
+const deckManagementBackButton = document.querySelector("#deck-management-back");
+const createDeckBackButton = document.querySelector("#create-deck-back");
+const cardEntryBackButton = document.querySelector("#card-entry-back");
+const existingCardsBackButton = document.querySelector("#existing-cards-back");
 const addCardButton = document.querySelector("#add-card-button");
 const cardForm = document.querySelector("#card-form");
 const cardEnglish = document.querySelector("#card-english");
@@ -104,6 +123,7 @@ function loadSavedState() {
         };
     } catch (error) {
         storageStatus.textContent = `Could not load saved decks: ${error.message} Starting with the built-in decks.`;
+        storageStatus.hidden = false;
         return { decks: cloneDecks(seedDecks), lastActiveDeck: Object.keys(seedDecks)[0] };
     }
 }
@@ -116,6 +136,7 @@ let activeModule = modules[activeDeckId];
 let currentDeck = activeModule.cards;
 let currentIndex = 0;
 let editingCard = null;
+let cardFormReturnView = null;
 let shuffledOrder = null;
 
 function persistState() {
@@ -124,9 +145,11 @@ function persistState() {
             decks: modules,
             lastActiveDeck: activeDeckId
         }));
-        storageStatus.textContent = "Decks and cards are saved in this browser.";
+        storageStatus.textContent = "";
+        storageStatus.hidden = true;
     } catch (error) {
         storageStatus.textContent = `Could not save changes in this browser: ${error.message}`;
+        storageStatus.hidden = false;
     }
 }
 
@@ -144,9 +167,11 @@ function getVisibleCards() {
 }
 
 function renderDeckOptions() {
-    const options = Object.entries(modules).map(([id, deck]) => new Option(deck.name, id));
-    moduleFilter.replaceChildren(...options);
+    const options = () => Object.entries(modules).map(([id, deck]) => new Option(deck.name, id));
+    moduleFilter.replaceChildren(...options());
+    manageDeckFilter.replaceChildren(...options());
     moduleFilter.value = activeDeckId;
+    manageDeckFilter.value = activeDeckId;
 }
 
 function renderCategoryOptions() {
@@ -207,7 +232,6 @@ function renderCard() {
     wordPrompt.textContent = card.english;
     wordPrompt.classList.toggle("is-phrase", cardModule.item === "phrase");
     wordLabel.textContent = cardModule.prompt;
-    nextItemLabel.textContent = cardModule.item;
     malayalamWord.textContent = card.malayalam;
     transliteration.textContent = card.transliteration;
     cardFront.setAttribute("aria-hidden", String(isRevealed));
@@ -221,12 +245,24 @@ function renderManagedCards() {
     const items = activeModule.cards.map((card) => {
         const item = document.createElement("li");
         const summary = document.createElement("span");
+        const english = document.createElement("span");
+        const details = document.createElement("span");
+        const malayalam = document.createElement("span");
+        const category = document.createElement("span");
         const actions = document.createElement("div");
         const editButton = document.createElement("button");
         const removeButton = document.createElement("button");
 
         summary.className = "managed-card-summary";
-        summary.textContent = `${card.english} — ${card.malayalam} (${card.category})`;
+        english.className = "managed-card-english";
+        english.textContent = card.english;
+        details.className = "managed-card-details";
+        malayalam.className = "managed-card-malayalam";
+        malayalam.textContent = card.malayalam;
+        category.className = "managed-card-category";
+        category.textContent = card.category;
+        details.append(malayalam, category);
+        summary.append(english, details);
         actions.className = "managed-card-actions";
         editButton.className = "button button-secondary";
         editButton.type = "button";
@@ -250,6 +286,34 @@ function renderManagementForms() {
     deckName.value = activeModule.name;
     deleteDeckButton.disabled = Object.keys(modules).length < 2;
     renderManagedCards();
+}
+
+function showManagementView(view) {
+    deckManagementView.hidden = view !== deckManagementView;
+    createDeckView.hidden = view !== createDeckView;
+    cardEntryView.hidden = view !== cardEntryView;
+    existingCardsView.hidden = view !== existingCardsView;
+}
+
+function setManaging(isManaging, view = null) {
+    app.classList.toggle("is-managing", isManaging);
+    headerMenu.open = false;
+    headerMenu.hidden = isManaging;
+    homeButton.hidden = !isManaging;
+    showManagementView(isManaging ? view : null);
+
+    if (!isManaging) {
+        cardFormReturnView = null;
+        resetCardForm();
+        closeDeckUpdateForm();
+        createDeckForm.reset();
+        cardEntryBackButton.textContent = "Back to cards";
+    }
+}
+
+function closeDeckUpdateForm() {
+    renameDeckForm.hidden = true;
+    deckName.value = activeModule.name;
 }
 
 function renderAll() {
@@ -277,14 +341,16 @@ function moveCard(direction) {
 
 function startEditingCard(card) {
     editingCard = card;
+    cardFormReturnView = existingCardsView;
     cardForm.hidden = false;
-    addCardButton.hidden = true;
     cardEnglish.value = card.english;
     cardMalayalam.value = card.malayalam;
     cardTransliteration.value = card.transliteration;
     cardCategory.value = card.category;
     cardFormTitle.textContent = "Edit a card";
     saveCardButton.textContent = "Save card";
+    cardEntryBackButton.textContent = "Back to cards";
+    showManagementView(cardEntryView);
     cardEnglish.focus();
 }
 
@@ -292,7 +358,6 @@ function resetCardForm() {
     editingCard = null;
     cardForm.reset();
     cardForm.hidden = true;
-    addCardButton.hidden = false;
     cardFormTitle.textContent = "Add a card";
     saveCardButton.textContent = "Add card";
 }
@@ -310,18 +375,24 @@ function deleteCard(card) {
     renderCategoryOptions();
     renderCard();
     renderManagedCards();
+    showManagementView(existingCardsView);
 }
 
-moduleFilter.addEventListener("change", () => {
-    activeDeckId = moduleFilter.value;
+function selectActiveDeck(deckId) {
+    activeDeckId = deckId;
     categoryFilter.value = "All";
     cardSearch.value = "";
     shuffledOrder = null;
+    cardFormReturnView = null;
     resetCardForm();
+    closeDeckUpdateForm();
     setRevealed(false);
     persistState();
     renderAll();
-});
+}
+
+moduleFilter.addEventListener("change", () => selectActiveDeck(moduleFilter.value));
+manageDeckFilter.addEventListener("change", () => selectActiveDeck(manageDeckFilter.value));
 
 categoryFilter.addEventListener("change", () => {
     shuffledOrder = null;
@@ -343,7 +414,16 @@ revealButton.addEventListener("click", () => {
 previousButton.addEventListener("click", () => moveCard(-1));
 nextButton.addEventListener("click", () => moveCard(1));
 document.addEventListener("keydown", (event) => {
-    if (["INPUT", "TEXTAREA", "SELECT"].includes(event.target.tagName)) {
+    if (event.key === "Escape" && headerMenu.open) {
+        headerMenu.open = false;
+        headerMenuSummary.focus();
+        return;
+    }
+
+    if (["INPUT", "TEXTAREA", "SELECT"].includes(event.target.tagName)
+        || app.classList.contains("is-managing")
+        || helpDialog.open
+        || headerMenu.open) {
         return;
     }
 
@@ -380,13 +460,15 @@ createDeckForm.addEventListener("submit", (event) => {
     activeDeckId = id;
     shuffledOrder = null;
     createDeckForm.reset();
-    deckManagementDetails.open = false;
     categoryFilter.value = "All";
     cardSearch.value = "";
-    setRevealed(false);
+    resetCardForm();
+    revealButton.setAttribute("aria-expanded", "false");
     persistState();
     renderAll();
-    addCardButton.focus();
+    showManagementView(deckManagementView);
+    closeDeckUpdateForm();
+    openCreateDeckButton.focus();
 });
 
 renameDeckForm.addEventListener("submit", (event) => {
@@ -394,7 +476,7 @@ renameDeckForm.addEventListener("submit", (event) => {
     activeModule.name = deckName.value.trim();
     persistState();
     renderDeckOptions();
-    storageStatus.textContent = `Saved deck "${activeModule.name}".`;
+    closeDeckUpdateForm();
 });
 
 deleteDeckButton.addEventListener("click", () => {
@@ -413,9 +495,10 @@ deleteDeckButton.addEventListener("click", () => {
     categoryFilter.value = "All";
     cardSearch.value = "";
     resetCardForm();
-    setRevealed(false);
+    revealButton.setAttribute("aria-expanded", "false");
     persistState();
     renderAll();
+    showManagementView(deckManagementView);
 });
 
 cardForm.addEventListener("submit", (event) => {
@@ -433,30 +516,96 @@ cardForm.addEventListener("submit", (event) => {
         activeModule.cards.push(updatedCard);
     }
 
+    const returnView = cardFormReturnView || existingCardsView;
+    cardFormReturnView = null;
     shuffledOrder = null;
     resetCardForm();
-    addCardButton.focus();
     persistState();
     renderCategoryOptions();
     renderCard();
     renderManagedCards();
+    showManagementView(returnView);
+    existingCardsBackButton.focus();
 });
 
 cancelCardEditButton.addEventListener("click", () => {
+    const returnView = cardFormReturnView || existingCardsView;
+    cardFormReturnView = null;
     resetCardForm();
+    showManagementView(returnView);
+});
+openManagementDecksButton.addEventListener("click", () => {
+    setManaging(true, deckManagementView);
+    manageDeckFilter.focus();
+});
+openManagementCardsButton.addEventListener("click", () => {
+    renderManagedCards();
+    setManaging(true, existingCardsView);
     addCardButton.focus();
 });
+homeButton.addEventListener("click", () => {
+    setManaging(false);
+    headerMenuSummary.focus();
+});
+openHelpButton.addEventListener("click", () => {
+    headerMenu.open = false;
+    helpDialog.showModal();
+    closeHelpButton.focus();
+});
+closeHelpButton.addEventListener("click", () => {
+    helpDialog.close();
+});
+helpDialog.addEventListener("close", () => {
+    headerMenuSummary.focus();
+});
+openCreateDeckButton.addEventListener("click", () => {
+    createDeckForm.reset();
+    showManagementView(createDeckView);
+    newDeckName.focus();
+});
 addCardButton.addEventListener("click", () => {
+    resetCardForm();
+    cardFormReturnView = existingCardsView;
+    cardEntryBackButton.textContent = "Back to cards";
     cardForm.hidden = false;
-    addCardButton.hidden = true;
-    cardFormTitle.textContent = "Add a card";
-    saveCardButton.textContent = "Add card";
+    showManagementView(cardEntryView);
     cardEnglish.focus();
+});
+deckManagementBackButton.addEventListener("click", () => {
+    setManaging(false);
+    headerMenuSummary.focus();
+});
+updateDeckButton.addEventListener("click", () => {
+    deckName.value = activeModule.name;
+    renameDeckForm.hidden = false;
+    deckName.focus();
+});
+cancelDeckUpdateButton.addEventListener("click", () => {
+    closeDeckUpdateForm();
+    updateDeckButton.focus();
+});
+createDeckBackButton.addEventListener("click", () => {
+    createDeckForm.reset();
+    showManagementView(deckManagementView);
+    openCreateDeckButton.focus();
+});
+cardEntryBackButton.addEventListener("click", () => {
+    const returnView = cardFormReturnView || existingCardsView;
+    cardFormReturnView = null;
+    resetCardForm();
+    showManagementView(returnView);
+    if (returnView === existingCardsView) {
+        existingCardsBackButton.focus();
+    } else {
+        addCardButton.focus();
+    }
+});
+existingCardsBackButton.addEventListener("click", () => {
+    setManaging(false);
+    headerMenuSummary.focus();
 });
 
 renderAll();
 if (needsInitialSave) {
     persistState();
-} else if (!storageStatus.textContent) {
-    storageStatus.textContent = "Changes save in this browser.";
 }

@@ -11,26 +11,50 @@
 <body>
     <main class="app">
         <header class="app-header">
-            <a class="brand" href="#" aria-label="DeckTalk home">DeckTalk<span>.</span></a>
-            <p class="language-label">ENGLISH <span aria-hidden="true">→</span> മലയാളം</p>
+            <div class="brand-lockup">
+                <a class="brand" href="#" aria-label="DeckTalk home">DeckTalk<span>.</span></a>
+                <p class="brand-tagline">Your travel language companion</p>
+            </div>
+            <div class="header-actions">
+                <p class="language-label">ENGLISH <span aria-hidden="true">→</span> മലയാളം</p>
+                <details class="header-menu" id="header-menu">
+                    <summary>Menu</summary>
+                    <nav class="header-menu-content" aria-label="Main menu">
+                        <button id="open-management-decks-button" type="button">Manage Decks</button>
+                        <button id="open-management-cards-button" type="button">Manage Cards</button>
+                        <button id="open-help-button" type="button">Help &amp; About</button>
+                    </nav>
+                </details>
+                <button class="header-home" id="home-button" type="button" hidden>Home</button>
+            </div>
         </header>
 
-        <section class="learning-area" aria-labelledby="page-title">
+        <section class="learning-area" id="learning-area" aria-labelledby="page-title">
             <div class="intro">
-                <p class="eyebrow">YOUR TRAVEL LANGUAGE COMPANION</p>
-                <h1 id="page-title">A few words go a long way.</h1>
-                <p class="intro-copy">Build confidence for your next conversation, one card at a time.</p>
+                <h1 id="page-title">A few words go a long way…</h1>
             </div>
 
             <div class="deck-toolbar">
-                <label for="module-filter">Deck</label>
-                <select id="module-filter" aria-label="Choose a deck"></select>
-                <label class="search-label" for="card-search">Search all decks</label>
-                <input id="card-search" type="search" placeholder="Search all decks" aria-label="Search cards across all decks">
-                <label for="category-filter">Category</label>
-                <select id="category-filter" aria-label="Filter cards by category">
-                    <option value="All">All categories</option>
-                </select>
+                <div class="filter-group">
+                    <label for="module-filter">Deck</label>
+                    <select id="module-filter" aria-label="Choose a deck"></select>
+                </div>
+                <div class="filter-group">
+                    <label for="category-filter">Category</label>
+                    <select id="category-filter" aria-label="Filter cards by category">
+                        <option value="All">All categories</option>
+                    </select>
+                </div>
+                <div class="search-field">
+                    <label class="visually-hidden" for="card-search">Search cards across all decks</label>
+                    <span class="search-icon" aria-hidden="true">
+                        <svg viewBox="0 0 20 20" focusable="false">
+                            <circle cx="8.5" cy="8.5" r="5.5"></circle>
+                            <path d="m13 13 4 4"></path>
+                        </svg>
+                    </span>
+                    <input id="card-search" type="search" placeholder="Search cards">
+                </div>
                 <p class="progress" id="card-progress" aria-live="polite"></p>
             </div>
 
@@ -72,69 +96,103 @@
             <p class="empty-state" id="flashcard-status" aria-live="polite" hidden></p>
 
             <nav class="card-controls" aria-label="Flashcard navigation">
-                <button class="button button-secondary" id="previous-button" type="button">Previous</button>
+                <button class="button button-secondary" id="previous-button" type="button"><span aria-hidden="true">←</span> Previous</button>
                 <button class="button button-secondary" id="shuffle-button" type="button">Shuffle</button>
-                <button class="button button-primary" id="next-button" type="button">Next <span id="next-item-label">word</span> <span aria-hidden="true">→</span></button>
+                <button class="button button-secondary" id="next-button" type="button">Next <span aria-hidden="true">→</span></button>
             </nav>
-            <p class="keyboard-hint">Use ← and → to move between cards. There’s no rush to get it right.</p>
-            <p class="storage-status" id="storage-status" aria-live="polite"></p>
+            <p class="storage-status" id="storage-status" aria-live="polite" hidden></p>
         </section>
 
-        <section class="manage-area" aria-labelledby="manage-title">
-            <details id="manage-details">
-                <summary id="manage-title">Manage decks and cards</summary>
-                <div class="manage-content">
-                    <section class="manage-section" aria-labelledby="card-management-title">
-                        <div class="manage-section-heading">
-                            <h2 id="card-management-title">Cards in this deck</h2>
-                            <button class="button button-primary" id="add-card-button" type="button">Add a card</button>
+        <section class="manage-area" id="manage-area" aria-labelledby="manage-title">
+            <h1 class="visually-hidden" id="manage-title">Manage cards and decks</h1>
+            <div class="manage-content">
+                <section class="management-view" id="deck-management-view" aria-labelledby="deck-management-title" hidden>
+                    <div class="manage-section-heading">
+                        <h2 id="deck-management-title">Manage Decks</h2>
+                        <button class="management-back" id="deck-management-back" type="button">Back to Home</button>
+                    </div>
+                    <div class="deck-picker">
+                        <label for="manage-deck-filter">Choose a deck</label>
+                        <select id="manage-deck-filter" aria-label="Choose a deck to manage"></select>
+                        <button class="button button-secondary" id="update-deck-button" type="button">Update</button>
+                        <button class="button button-danger" id="delete-deck-button" type="button">Delete</button>
+                        <button class="button button-secondary" id="open-create-deck" type="button">Create Deck</button>
+                    </div>
+                    <form id="rename-deck-form" class="manage-form rename-deck-form" hidden>
+                        <h3>Update deck name</h3>
+                        <label for="deck-name">New deck name</label>
+                        <input id="deck-name" name="name" required maxlength="60">
+                        <div class="form-actions">
+                            <button class="button button-primary" type="submit">Save changes</button>
+                            <button class="button button-secondary" id="cancel-deck-update" type="button">Cancel</button>
                         </div>
-                        <form id="card-form" class="manage-form" hidden>
-                            <h3 id="card-form-title">Add a card</h3>
-                            <label for="card-english">English (front)</label>
-                            <textarea id="card-english" name="english" required maxlength="180"></textarea>
-                            <label for="card-malayalam">Malayalam (back)</label>
-                            <textarea id="card-malayalam" name="malayalam" required maxlength="240"></textarea>
-                            <label for="card-transliteration">Transliteration</label>
-                            <input id="card-transliteration" name="transliteration" required maxlength="180">
-                            <label for="card-category">Category</label>
-                            <input id="card-category" name="category" required maxlength="60">
-                            <div class="form-actions">
-                                <button class="button button-primary" id="save-card-button" type="submit">Add card</button>
-                                <button class="button button-secondary" id="cancel-card-edit" type="button">Cancel</button>
-                            </div>
-                        </form>
-                        <ul class="managed-card-list" id="managed-card-list" aria-label="Cards in selected deck"></ul>
-                    </section>
+                    </form>
+                </section>
 
-                    <details class="deck-management" id="deck-management-details">
-                        <summary>Manage decks</summary>
-                        <div class="deck-management-content">
-                            <form id="create-deck-form" class="manage-form">
-                                <h3>Create a deck</h3>
-                                <label for="new-deck-name">Deck name</label>
-                                <input id="new-deck-name" name="name" required maxlength="60">
-                                <label for="new-deck-item">Card type</label>
-                                <select id="new-deck-item" name="item">
-                                    <option value="word">Words</option>
-                                    <option value="phrase">Phrases</option>
-                                </select>
-                                <button class="button button-primary" type="submit">Create deck</button>
-                            </form>
-
-                            <form id="rename-deck-form" class="manage-form">
-                                <h3>Rename selected deck</h3>
-                                <p class="manage-help">Choose a deck from the Deck selector above, then enter its new name.</p>
-                                <label for="deck-name">New deck name</label>
-                                <input id="deck-name" name="name" required maxlength="60">
-                                <button class="button button-secondary" type="submit">Save deck name</button>
-                                <button class="button button-danger" id="delete-deck-button" type="button">Delete deck</button>
-                            </form>
+                <section class="management-view" id="create-deck-view" aria-labelledby="create-deck-title" hidden>
+                    <h2 id="create-deck-title">Create a deck</h2>
+                    <form id="create-deck-form" class="manage-form">
+                        <label for="new-deck-name">Deck name</label>
+                        <input id="new-deck-name" name="name" required maxlength="60">
+                        <label for="new-deck-item">Card type</label>
+                        <select id="new-deck-item" name="item">
+                            <option value="word">Words</option>
+                            <option value="phrase">Phrases</option>
+                        </select>
+                        <div class="form-actions">
+                            <button class="button button-primary" type="submit">Create deck</button>
+                            <button class="button button-secondary" id="create-deck-back" type="button">Cancel</button>
                         </div>
-                    </details>
-                </div>
-            </details>
+                    </form>
+                </section>
+
+                <section class="management-view" id="card-entry-view" aria-labelledby="card-form-title" hidden>
+                    <form id="card-form" class="manage-form" hidden>
+                        <h3 id="card-form-title">Add a card</h3>
+                        <label for="card-english">English (front)</label>
+                        <textarea id="card-english" name="english" required maxlength="180"></textarea>
+                        <label for="card-malayalam">Malayalam (back)</label>
+                        <textarea id="card-malayalam" name="malayalam" required maxlength="240"></textarea>
+                        <label for="card-transliteration">Transliteration</label>
+                        <input id="card-transliteration" name="transliteration" required maxlength="180">
+                        <label for="card-category">Category</label>
+                        <input id="card-category" name="category" required maxlength="60">
+                        <div class="form-actions">
+                            <button class="button button-primary" id="save-card-button" type="submit">Add card</button>
+                            <button class="button button-secondary" id="cancel-card-edit" type="button">Cancel</button>
+                        </div>
+                    </form>
+                    <button class="management-back" id="card-entry-back" type="button">Back to Manage Cards</button>
+                </section>
+
+                <section class="management-view" id="existing-cards-view" aria-labelledby="card-management-title" hidden>
+                    <div class="manage-section-heading">
+                        <h2 id="card-management-title">Cards</h2>
+                        <button class="button button-secondary" id="add-card-button" type="button">Add a card</button>
+                    </div>
+                    <ul class="managed-card-list" id="managed-card-list" aria-label="Cards in selected deck"></ul>
+                    <button class="management-back" id="existing-cards-back" type="button">Back to Home</button>
+                </section>
+            </div>
         </section>
+
+        <dialog class="help-dialog" id="help-dialog" aria-labelledby="help-title">
+            <div class="help-dialog-heading">
+                <h2 id="help-title">Help &amp; About</h2>
+                <button class="button button-secondary" id="close-help-button" type="button">Close</button>
+            </div>
+            <p>DeckTalk helps you practise useful English-to-Malayalam travel words and phrases.</p>
+            <h3>Using the flashcards</h3>
+            <ul>
+                <li>Choose a deck or category to browse, or search for cards across all decks.</li>
+                <li>Select a card to reveal its Malayalam translation and transliteration.</li>
+                <li>Use Previous and Next to move between cards, or Shuffle to change their order. The left and right arrow keys also navigate cards.</li>
+            </ul>
+            <h3>Managing your cards</h3>
+            <p>Open Menu and choose Manage Decks to create, rename, or delete decks, or choose Manage Cards to add, edit, or remove cards.</p>
+            <h3>Your data</h3>
+            <p>Your decks and cards are saved in this browser. They do not sync to other devices.</p>
+        </dialog>
 
         <footer class="app-footer">
             <span>DECKTALK</span>

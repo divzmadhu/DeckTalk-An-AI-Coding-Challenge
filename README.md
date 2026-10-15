@@ -108,7 +108,7 @@ DeckTalk is built using lightweight, modern web technologies without heavy frame
 ### Step 9: Deck and card management
 
 - Added create, rename, and delete deck controls, plus add, edit, and delete card controls.
-- Save decks, cards, and the last active deck in this browser's LocalStorage.
+- Implemented browser LocalStorage persistence for decks, cards, and the last active deck, so changes remain after reloading in the same browser.
 - Added keyword search across card text and transliteration, category filtering, shuffle, and left/right keyboard navigation.
 - This is a local single-browser authoring experience; data is not synced to another device or shared with other users.
 - Added an empty-state message for decks without cards and for searches with no matches.
@@ -121,4 +121,3 @@ DeckTalk is built using lightweight, modern web technologies without heavy frame
 - Verified card form visibility, card add/edit/cancel, deck selection/rename/create, persistence, and closing an open editor safely when switching decks.
 - Layout feedback: moved the "Manage decks and cards" entry directly below the page introduction and above study controls so it is immediately discoverable without scrolling past the flashcards. Reduced vertical padding and card height to keep core controls more compact; the detailed manager remains collapsible.
 - Follow-up layout preference: placed the collapsed manager below the study controls and above the footer. The study region now flexes to available viewport height, with compact header/footer spacing and viewport-aware card sizing; short/tall narrow screens can still scroll rather than clipping content.
-
