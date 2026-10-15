@@ -4,8 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DeckTalk - Travel Flashcards & Language Companion</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
 </head>
 <body>
-    
+    <main class="app">
+        <header class="app-header">
+            <a class="brand" href="#" aria-label="DeckTalk home">DeckTalk<span>.</span></a>
+            <p class="language-label">ENGLISH <span aria-hidden="true">→</span> മലയാളം</p>
+        </header>
+
+        <section class="learning-area" aria-labelledby="page-title">
+            <div class="intro">
+                <p class="eyebrow">YOUR TRAVEL LANGUAGE COMPANION</p>
+                <h1 id="page-title">A few words go a long way.</h1>
+                <p class="intro-copy">Build confidence for your next conversation, one card at a time.</p>
+            </div>
+
+            <div class="deck-toolbar">
+                <label for="category-filter">Practice</label>
+                <select id="category-filter" aria-label="Filter vocabulary by category">
+                    <option value="All">All words</option>
+                    <option value="Essentials">Essentials</option>
+                    <option value="Places">Places</option>
+                    <option value="People">People</option>
+                    <option value="Numbers">Numbers</option>
+                </select>
+                <p class="progress" id="card-progress" aria-live="polite"></p>
+            </div>
+
+            <article class="flashcard" aria-labelledby="word-prompt">
+                <div class="card-topline">
+                    <span class="card-category" id="card-category"></span>
+                    <span class="card-hint">TAP TO REVEAL</span>
+                </div>
+                <button class="card-content" id="reveal-button" type="button" aria-expanded="false">
+                    <span class="word-label">HOW DO YOU SAY</span>
+                    <span class="word-prompt" id="word-prompt"></span>
+                    <span class="translation" id="translation" hidden>
+                        <span class="malayalam-word" id="malayalam-word" lang="ml"></span>
+                        <span class="transliteration" id="transliteration"></span>
+                    </span>
+                    <span class="reveal-copy" id="reveal-copy">Reveal the Malayalam</span>
+                </button>
+                <div class="card-bottomline">
+                    <span>ENGLISH <span aria-hidden="true">→</span> MALAYALAM</span>
+                    <span class="card-mark" aria-hidden="true">DT</span>
+                </div>
+            </article>
+
+            <nav class="card-controls" aria-label="Flashcard navigation">
+                <button class="button button-secondary" id="previous-button" type="button">Previous</button>
+                <button class="button button-primary" id="next-button" type="button">Next word <span aria-hidden="true">→</span></button>
+            </nav>
+            <p class="keyboard-hint">Take your time. There’s no rush to get it right.</p>
+        </section>
+
+        <footer class="app-footer">
+            <span>DECKTALK</span>
+            <span>START WITH A HELLO.</span>
+        </footer>
+    </main>
 </body>
 </html>

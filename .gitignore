@@ -1,0 +1,24 @@
+# --- Operating System Files ---
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# --- Editor & IDE Settings ---
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# --- Environment & Local Secrets ---
+.env
+.env.local
+
+# --- Local Notes or Scratchpads (Optional) ---
+# If you write personal notes or AI prompt drafts while coding, 
+# keep them in a file like this and git will ignore it:
+scratchpad.txt
+notes/
+working.md
