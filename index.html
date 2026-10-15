@@ -35,29 +35,40 @@
                 <p class="progress" id="card-progress" aria-live="polite"></p>
             </div>
 
-            <article class="flashcard" aria-labelledby="word-prompt">
-                <div class="card-topline">
-                    <span class="card-category" id="card-category"></span>
-                </div>
+            <article class="flashcard" aria-label="Flashcard">
                 <button class="card-content" id="reveal-button" type="button" aria-expanded="false" aria-label="Tap to reveal Malayalam translation">
                     <span class="card-inner">
                         <span class="card-face card-face-front" id="card-front" aria-hidden="false">
-                            <span class="word-label" id="word-label">HOW DO YOU SAY</span>
-                            <span class="word-prompt" id="word-prompt"></span>
-                            <span class="reveal-copy">Tap to reveal</span>
+                            <span class="card-topline">
+                                <span class="card-category"></span>
+                            </span>
+                            <span class="card-main">
+                                <span class="word-label" id="word-label">HOW DO YOU SAY</span>
+                                <span class="word-prompt" id="word-prompt"></span>
+                                <span class="reveal-copy">Tap to reveal</span>
+                            </span>
+                            <span class="card-bottomline">
+                                <span>ENGLISH <span aria-hidden="true">→</span> MALAYALAM</span>
+                                <span class="card-mark" aria-hidden="true">DT</span>
+                            </span>
                         </span>
                         <span class="card-face card-face-back" id="card-back" aria-hidden="true">
-                            <span class="word-label">MALAYALAM</span>
-                            <span class="malayalam-word" id="malayalam-word" lang="ml"></span>
-                            <span class="transliteration" id="transliteration"></span>
-                            <span class="reveal-copy">Tap to hide</span>
+                            <span class="card-topline">
+                                <span class="card-category"></span>
+                            </span>
+                            <span class="card-main">
+                                <span class="word-label">MALAYALAM</span>
+                                <span class="malayalam-word" id="malayalam-word" lang="ml"></span>
+                                <span class="transliteration" id="transliteration"></span>
+                                <span class="reveal-copy">Tap to hide</span>
+                            </span>
+                            <span class="card-bottomline">
+                                <span>ENGLISH <span aria-hidden="true">→</span> MALAYALAM</span>
+                                <span class="card-mark" aria-hidden="true">DT</span>
+                            </span>
                         </span>
                     </span>
                 </button>
-                <div class="card-bottomline">
-                    <span>ENGLISH <span aria-hidden="true">→</span> MALAYALAM</span>
-                    <span class="card-mark" aria-hidden="true">DT</span>
-                </div>
             </article>
 
             <nav class="card-controls" aria-label="Flashcard navigation">

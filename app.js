@@ -11,7 +11,7 @@
 const modules = malayalamModules;
 const moduleFilter = document.querySelector("#module-filter");
 const categoryFilter = document.querySelector("#category-filter");
-const cardCategory = document.querySelector("#card-category");
+const cardCategories = document.querySelectorAll(".card-category");
 const cardProgress = document.querySelector("#card-progress");
 const wordPrompt = document.querySelector("#word-prompt");
 const wordLabel = document.querySelector("#word-label");
@@ -32,7 +32,9 @@ function renderCard() {
     const card = currentDeck[currentIndex];
     const isRevealed = revealButton.getAttribute("aria-expanded") === "true";
 
-    cardCategory.textContent = card.category;
+    cardCategories.forEach((categoryLabel) => {
+        categoryLabel.textContent = card.category;
+    });
     cardProgress.textContent = `${currentIndex + 1} / ${currentDeck.length}`;
     wordPrompt.textContent = card.english;
     wordPrompt.classList.toggle("is-phrase", activeModule.item === "phrase");

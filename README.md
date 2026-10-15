@@ -103,5 +103,10 @@ DeckTalk is built using lightweight, modern web technologies without heavy frame
 - Updated "Take me to [place]." using the Malayalam wording and transliteration supplied by the user.
 - Updated "Does this bus go to [place]?" using the Malayalam wording and transliteration supplied by the user.
 
+### Step 8: Flip the full flashcard
+
+- Moved the category badge and footer into both card faces so the whole card rotates, not only the center content.
+- Kept the prompt and translation centered within their respective card faces.
+
 
 
