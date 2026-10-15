@@ -107,17 +107,17 @@ DeckTalk is built using lightweight, modern web technologies without heavy frame
 
 ### Step 9: Deck and card management
 
-- Added create, rename, and delete deck controls, plus add, edit, and delete card controls.
-- Implemented browser LocalStorage persistence for decks, cards, and the last active deck, so changes remain after reloading in the same browser.
-- Added keyword search across card text and transliteration, category filtering, shuffle, and left/right keyboard navigation.
-- This is a local single-browser authoring experience; data is not synced to another device or shared with other users.
-- Added an empty-state message for decks without cards and for searches with no matches.
-- Verified syntax, whitespace, and mock-DOM workflows for persistence/reload, search, shuffle, deck/card create/edit/delete, keyboard navigation, and reveal state.
-- The card faces now have their own surface styling so the entire visible card face participates in the flip.
-- Search now finds matching cards across every deck; category options and card labels identify cross-deck results, while browsing without a search remains limited to the selected deck.
-- Verified that searching for "bus" finds all three seeded bus cards from the Travel Conversations deck, including category filtering and reset to the selected deck.
-- Requirement decision: the lab describes keyword search/filter within a deck, but I am keeping cross-deck search for now because it feels more user-friendly. Revisit only if matching the lab specification exactly becomes a priority.
-- Management layout update: moved create/rename/delete deck actions into a collapsed "Manage decks" disclosure, using the existing Deck selector to choose the deck to rename. The card editor is hidden until Add a card or Edit is selected, and returns to the compact card list after save or cancel.
-- Verified card form visibility, card add/edit/cancel, deck selection/rename/create, persistence, and closing an open editor safely when switching decks.
-- Layout feedback: moved the "Manage decks and cards" entry directly below the page introduction and above study controls so it is immediately discoverable without scrolling past the flashcards. Reduced vertical padding and card height to keep core controls more compact; the detailed manager remains collapsible.
-- Follow-up layout preference: placed the collapsed manager below the study controls and above the footer. The study region now flexes to available viewport height, with compact header/footer spacing and viewport-aware card sizing; short/tall narrow screens can still scroll rather than clipping content.
+- **Deck and card operations:** Create, rename, and delete decks; add, edit, and delete cards. The app prevents deleting the last remaining deck. Manage Decks and Manage Cards open from the header Menu; card management opens the selected deck's card list, with Add a card on that screen.
+- **Browser-local persistence:** Decks, cards, and the last active deck are saved in LocalStorage and remain after reloading in the same browser. Data is not synced to other browsers or devices.
+- **Search and study controls:** Search card text and transliteration across all decks, filter by category, shuffle, and navigate with Previous/Next. Without a search query, browsing stays within the selected deck. Empty decks and searches with no matches show a helpful message.
+- **Search behavior decision:** The lab describes searching within a deck. Cross-deck search is retained as a deliberate usability choice; when searching, results identify their deck.
+- **Verification:** Checked persistence/reload, search and category filtering, shuffle, navigation, reveal state, and deck/card create, rename, edit, and delete flows.
+
+### Step 10: Interface, responsive layout, and accessibility
+
+- **Navigation and help:** Put Manage Decks, Manage Cards, and Help & About in the top-right Menu. Management opens as a separate view with a Home action; Help & About explains study controls and browser-local data storage.
+- **Study interface:** Added compact, labeled deck/category selectors and a search field. Previous and Next use matching neutral styles and directional arrows; Next has a concise label. The header groups DeckTalk with its travel-language tagline.
+- **Management layout:** The manager uses a narrower, content-sized panel. The card list has its own responsive scroll area; card rows distinguish the English prompt, Malayalam translation, and category, with grouped Edit/Delete actions.
+- **Responsive behavior:** Added small-screen and short-viewport layout rules for the study toolbar, flashcard, management views, and controls. Verified the card-management view at desktop and mobile sizes.
+- **Accessibility:** Use semantic buttons, navigation, sections, labeled form controls, visible keyboard focus, and live status messages. Arrow keys navigate cards when focus is not on another interactive control. Management actions restore focus after form and list updates; card actions and Malayalam text include screen-reader-oriented labels and language metadata.
+- **Verification:** Checked keyboard navigation, menu and dialog focus behavior, management workflows, unique IDs, form labels, ARIA references, and HTML/JavaScript CSS-class usage. `node --check app.js` and `git diff --check` passed.

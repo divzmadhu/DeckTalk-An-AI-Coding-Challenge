@@ -137,6 +137,7 @@ let currentDeck = activeModule.cards;
 let currentIndex = 0;
 let editingCard = null;
 let cardFormReturnView = null;
+let cardFormReturnFocus = null;
 let shuffledOrder = null;
 
 function persistState() {
@@ -207,7 +208,7 @@ function renderCard() {
     flashcard.hidden = !hasCards;
     flashcardStatus.hidden = hasCards;
     flashcardStatus.textContent = !hasSearchQuery && activeModule.cards.length === 0
-        ? "This deck has no cards yet. Add a card below."
+        ? "This deck has no cards yet. Open Menu, then Manage Cards, to add one."
         : hasSearchQuery
             ? "No cards match your search and category across any deck."
             : "No cards match this category in the selected deck.";
@@ -242,6 +243,7 @@ function renderCard() {
 }
 
 function renderManagedCards() {
+    managedCardList.setAttribute("aria-label", `Cards in ${activeModule.name}`);
     const items = activeModule.cards.map((card) => {
         const item = document.createElement("li");
         const summary = document.createElement("span");
@@ -258,6 +260,7 @@ function renderManagedCards() {
         english.textContent = card.english;
         details.className = "managed-card-details";
         malayalam.className = "managed-card-malayalam";
+        malayalam.lang = "ml";
         malayalam.textContent = card.malayalam;
         category.className = "managed-card-category";
         category.textContent = card.category;
@@ -267,7 +270,11 @@ function renderManagedCards() {
         editButton.className = "button button-secondary";
         editButton.type = "button";
         editButton.textContent = "Edit";
-        editButton.addEventListener("click", () => startEditingCard(card));
+        editButton.setAttribute("aria-label", `Edit card: ${card.english}`);
+        editButton.addEventListener("click", () => {
+            cardFormReturnFocus = editButton;
+            startEditingCard(card);
+        });
         removeButton.className = "button button-danger";
         removeButton.type = "button";
         removeButton.textContent = "Delete";
@@ -356,6 +363,7 @@ function startEditingCard(card) {
 
 function resetCardForm() {
     editingCard = null;
+    cardFormReturnFocus = null;
     cardForm.reset();
     cardForm.hidden = true;
     cardFormTitle.textContent = "Add a card";
@@ -376,6 +384,12 @@ function deleteCard(card) {
     renderCard();
     renderManagedCards();
     showManagementView(existingCardsView);
+    const nextCard = managedCardList.children[Math.min(cardIndex, managedCardList.children.length - 1)];
+    if (nextCard) {
+        nextCard.querySelector("button").focus();
+    } else {
+        addCardButton.focus();
+    }
 }
 
 function selectActiveDeck(deckId) {
@@ -414,13 +428,23 @@ revealButton.addEventListener("click", () => {
 previousButton.addEventListener("click", () => moveCard(-1));
 nextButton.addEventListener("click", () => moveCard(1));
 document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && helpDialog.open) {
+        event.preventDefault();
+        helpDialog.close();
+        return;
+    }
+
     if (event.key === "Escape" && headerMenu.open) {
         headerMenu.open = false;
         headerMenuSummary.focus();
         return;
     }
 
-    if (["INPUT", "TEXTAREA", "SELECT"].includes(event.target.tagName)
+    const target = event.target;
+    const activeControl = target instanceof Element
+        ? target.closest("button, a, input, textarea, select, summary, [contenteditable='true']")
+        : null;
+    if ((activeControl && activeControl !== revealButton)
         || app.classList.contains("is-managing")
         || helpDialog.open
         || headerMenu.open) {
@@ -477,6 +501,7 @@ renameDeckForm.addEventListener("submit", (event) => {
     persistState();
     renderDeckOptions();
     closeDeckUpdateForm();
+    updateDeckButton.focus();
 });
 
 deleteDeckButton.addEventListener("click", () => {
@@ -517,7 +542,10 @@ cardForm.addEventListener("submit", (event) => {
     }
 
     const returnView = cardFormReturnView || existingCardsView;
+    const returnFocus = cardFormReturnFocus;
+    const savedCard = editingCard;
     cardFormReturnView = null;
+    cardFormReturnFocus = null;
     shuffledOrder = null;
     resetCardForm();
     persistState();
@@ -525,14 +553,33 @@ cardForm.addEventListener("submit", (event) => {
     renderCard();
     renderManagedCards();
     showManagementView(returnView);
-    existingCardsBackButton.focus();
+    if (returnFocus === addCardButton) {
+        addCardButton.focus();
+    } else if (savedCard) {
+        const savedCardIndex = activeModule.cards.indexOf(savedCard);
+        const savedCardRow = managedCardList.children[savedCardIndex];
+        if (savedCardRow) {
+            savedCardRow.querySelector("button").focus();
+        } else {
+            existingCardsBackButton.focus();
+        }
+    } else {
+        existingCardsBackButton.focus();
+    }
 });
 
 cancelCardEditButton.addEventListener("click", () => {
     const returnView = cardFormReturnView || existingCardsView;
+    const returnFocus = cardFormReturnFocus;
     cardFormReturnView = null;
+    cardFormReturnFocus = null;
     resetCardForm();
     showManagementView(returnView);
+    if (returnFocus && returnFocus.isConnected) {
+        returnFocus.focus();
+    } else {
+        existingCardsBackButton.focus();
+    }
 });
 openManagementDecksButton.addEventListener("click", () => {
     setManaging(true, deckManagementView);
@@ -566,6 +613,7 @@ openCreateDeckButton.addEventListener("click", () => {
 addCardButton.addEventListener("click", () => {
     resetCardForm();
     cardFormReturnView = existingCardsView;
+    cardFormReturnFocus = addCardButton;
     cardEntryBackButton.textContent = "Back to cards";
     cardForm.hidden = false;
     showManagementView(cardEntryView);
@@ -591,13 +639,15 @@ createDeckBackButton.addEventListener("click", () => {
 });
 cardEntryBackButton.addEventListener("click", () => {
     const returnView = cardFormReturnView || existingCardsView;
+    const returnFocus = cardFormReturnFocus;
     cardFormReturnView = null;
+    cardFormReturnFocus = null;
     resetCardForm();
     showManagementView(returnView);
-    if (returnView === existingCardsView) {
-        existingCardsBackButton.focus();
+    if (returnFocus && returnFocus.isConnected) {
+        returnFocus.focus();
     } else {
-        addCardButton.focus();
+        existingCardsBackButton.focus();
     }
 });
 existingCardsBackButton.addEventListener("click", () => {

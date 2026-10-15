@@ -35,7 +35,8 @@ button:focus-visible,
 select:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
-a:focus-visible {
+a:focus-visible,
+summary:focus-visible {
     outline: 3px solid #d69c58;
     outline-offset: 4px;
 }
@@ -202,13 +203,6 @@ h1 {
     font-weight: 500;
     letter-spacing: 0.015em;
     line-height: 1.12;
-}
-
-.intro-copy {
-    margin: 8px 0 0;
-    color: var(--muted);
-    font-size: 0.95rem;
-    line-height: 1.6;
 }
 
 .deck-toolbar {
@@ -634,24 +628,7 @@ h1 {
     padding-left: 22px;
 }
 
-.management-menu {
-    display: grid;
-    max-width: 440px;
-    gap: 10px;
-    margin: 0 auto;
-}
-
-.management-menu h2 {
-    margin: 0 0 6px;
-    color: #23372d;
-    font-family: "Playfair Display", Georgia, serif;
-    font-size: 1.45rem;
-    font-weight: 500;
-    text-align: center;
-}
-
-.management-view[hidden],
-.management-menu[hidden] {
+.management-view[hidden] {
     display: none;
 }
 
@@ -709,10 +686,6 @@ h1 {
     margin: 0 auto;
 }
 
-.manage-section {
-    min-width: 0;
-}
-
 .manage-section-heading {
     display: flex;
     align-items: center;
@@ -720,25 +693,6 @@ h1 {
     flex-wrap: wrap;
     gap: 12px;
     margin-bottom: 14px;
-}
-
-.manage-section h2 {
-    margin: 0;
-    color: #23372d;
-    font-family: "Playfair Display", Georgia, serif;
-    font-size: 1.45rem;
-    font-weight: 500;
-}
-
-.deck-management {
-    margin-top: 18px;
-}
-
-.deck-management-content {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
-    padding: 0 20px 20px;
 }
 
 .manage-form {
@@ -759,13 +713,6 @@ h1 {
     margin: 0 0 4px;
     color: #34443b;
     font-size: 0.95rem;
-}
-
-.manage-help {
-    margin: 0;
-    color: var(--muted);
-    font-size: 0.78rem;
-    line-height: 1.45;
 }
 
 .manage-form label {
@@ -898,10 +845,6 @@ h1 {
         margin-bottom: 14px;
     }
 
-    .intro-copy {
-        font-size: 0.88rem;
-    }
-
     .deck-toolbar {
         display: grid;
         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -956,13 +899,6 @@ h1 {
     .manage-content {
         padding: 0 14px 16px;
     }
-
-    .deck-management-content {
-        grid-template-columns: 1fr;
-        gap: 16px;
-        padding: 0 14px 16px;
-    }
-
 
 }
 
