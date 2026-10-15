@@ -11,7 +11,23 @@ const malayalamModules = {
             { english: "Toilet", malayalam: "കക്കൂസ്", transliteration: "kakkūs", category: "Places" },
             { english: "Friend", malayalam: "സുഹൃത്ത്", transliteration: "suhr̥tt", category: "People" },
             { english: "One", malayalam: "ഒന്ന്", transliteration: "onnu", category: "Numbers" },
-            { english: "Two", malayalam: "രണ്ട്", transliteration: "raṇṭu", category: "Numbers" }
+            { english: "Two", malayalam: "രണ്ട്", transliteration: "raṇṭu", category: "Numbers" },
+            { english: "Three", malayalam: "മൂന്ന്", transliteration: "mūnnu", category: "Numbers" },
+            { english: "Four", malayalam: "നാല്", transliteration: "nālu", category: "Numbers" },
+            { english: "Five", malayalam: "അഞ്ച്", transliteration: "añcu", category: "Numbers" },
+            { english: "Six", malayalam: "ആറ്", transliteration: "āṟu", category: "Numbers" },
+            { english: "Seven", malayalam: "ഏഴ്", transliteration: "ēḻu", category: "Numbers" },
+            { english: "Eight", malayalam: "എട്ട്", transliteration: "eṭṭu", category: "Numbers" },
+            { english: "Nine", malayalam: "ഒമ്പത്", transliteration: "ompatu", category: "Numbers" },
+            { english: "Ten", malayalam: "പത്ത്", transliteration: "pattu", category: "Numbers" },
+            { english: "Twenty", malayalam: "ഇരുപത്", transliteration: "irupatu", category: "Numbers" },
+            { english: "Fifty", malayalam: "അമ്പത്", transliteration: "ampatu", category: "Numbers" },
+            { english: "One hundred", malayalam: "നൂറ്", transliteration: "nūṟu", category: "Numbers" },
+            { english: "Five hundred", malayalam: "അഞ്ഞൂറ്", transliteration: "aññūṟu", category: "Numbers" },
+            { english: "One thousand", malayalam: "ആയിരം", transliteration: "āyiram", category: "Numbers" },
+            { english: "Ten thousand", malayalam: "പതിനായിരം", transliteration: "patināyiram", category: "Numbers" },
+            { english: "One lakh (100,000)", malayalam: "ഒരു ലക്ഷം", transliteration: "oru lakṣam", category: "Numbers" },
+            { english: "One million (ten lakh)", malayalam: "പത്ത് ലക്ഷം", transliteration: "pattu lakṣam", category: "Numbers" }
         ]
     },
     conversations: {

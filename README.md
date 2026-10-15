@@ -22,6 +22,9 @@ DeckTalk is built using lightweight, modern web technologies without heavy frame
 - **Logic:** Vanilla JavaScript (ES6+, DOM manipulation, event listeners)
 - **Data Format:** JSON / Local JavaScript objects for modular language packs
 
+[ Application Core Engine + Audio ] ── (Initial Launch) ──┬── [ Malayalam Language Pack (JSON + Audio) ]
+                                                          ├── [ Spanish Language Pack (JSON + Audio) ]
+                                                          └── [ French Language Pack (JSON + Audio) ]
 
 
 
@@ -85,5 +88,12 @@ DeckTalk is built using lightweight, modern web technologies without heavy frame
 - Moved the existing Core Vocabulary and Travel Conversations card data into `malayalam.js`.
 - Load the data file before `app.js`; card content and behavior remain unchanged.
 - Kept the data in JavaScript so the app continues to work when opened directly from `index.html`.
+
+### Step 6: Core number vocabulary
+
+- Expanded the Numbers category to cover one through ten.
+- Added selected useful amounts: twenty, fifty, one hundred, five hundred, one thousand, ten thousand, one lakh, and one million (ten lakh).
+- Verified several forms against Malayalam Wiktionary entries; transliterations use learner-friendly romanization.
+
 
 
