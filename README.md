@@ -80,4 +80,10 @@ DeckTalk is built using lightweight, modern web technologies without heavy frame
 - Added midpoint visibility switching so the front and back content cannot overlap during the flip.
 - Shortened the flip duration from 550 ms to 350 ms and aligned the visibility handoff to its midpoint.
 
+### Step 5: Separate Malayalam language data
+
+- Moved the existing Core Vocabulary and Travel Conversations card data into `malayalam.js`.
+- Load the data file before `app.js`; card content and behavior remain unchanged.
+- Kept the data in JavaScript so the app continues to work when opened directly from `index.html`.
+
 
