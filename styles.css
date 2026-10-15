@@ -43,6 +43,7 @@ a:focus-visible {
 .app {
     display: flex;
     min-height: 100vh;
+    min-height: 100svh;
     flex-direction: column;
     padding: 0 7.5%;
 }
@@ -55,7 +56,7 @@ a:focus-visible {
 }
 
 .app-header {
-    height: 88px;
+    flex: 0 0 68px;
     border-bottom: 1px solid var(--line);
 }
 
@@ -86,18 +87,23 @@ a:focus-visible {
 }
 
 .learning-area {
+    display: flex;
     width: min(100%, 620px);
-    margin: auto;
-    padding: 76px 0 82px;
+    min-height: 0;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+    padding: clamp(12px, 2vh, 22px) 0;
 }
 
 .intro {
-    margin-bottom: 36px;
+    margin-bottom: 16px;
     text-align: center;
 }
 
 .eyebrow {
-    margin: 0 0 14px;
+    margin: 0 0 8px;
     color: var(--green);
 }
 
@@ -105,14 +111,14 @@ h1 {
     margin: 0;
     color: #23372d;
     font-family: "Playfair Display", Georgia, serif;
-    font-size: clamp(2.1rem, 6vw, 3.2rem);
+    font-size: clamp(1.9rem, 4.5vw, 2.8rem);
     font-weight: 500;
     letter-spacing: -0.045em;
     line-height: 1.12;
 }
 
 .intro-copy {
-    margin: 14px 0 0;
+    margin: 8px 0 0;
     color: var(--muted);
     font-size: 0.95rem;
     line-height: 1.6;
@@ -160,7 +166,7 @@ h1 {
 .flashcard {
     position: relative;
     display: block;
-    min-height: 340px;
+    min-height: clamp(220px, 32vh, 280px);
     padding: 0;
     border: 1px solid #e6e4d9;
     border-radius: 12px;
@@ -219,7 +225,7 @@ h1 {
     display: block;
     width: 100%;
     height: 100%;
-    min-height: 340px;
+    min-height: clamp(220px, 32vh, 280px);
     transform-style: preserve-3d;
     transition: transform 350ms cubic-bezier(0.2, 0.7, 0.25, 1);
 }
@@ -235,7 +241,7 @@ h1 {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    padding: 22px 26px;
+    padding: clamp(14px, 2vh, 20px) 22px;
     border: 1px solid #e6e4d9;
     border-radius: 12px;
     background:
@@ -270,7 +276,7 @@ h1 {
     align-items: center;
     justify-content: center;
     width: 100%;
-    padding: 20px 8px;
+    padding: 12px 8px;
 }
 
 .word-label {
@@ -340,11 +346,11 @@ h1 {
     display: flex;
     justify-content: center;
     gap: 12px;
-    margin-top: 18px;
+    margin-top: 12px;
 }
 
 .button {
-    min-height: 48px;
+    min-height: 44px;
     padding: 0 20px;
     border: 1px solid transparent;
     border-radius: 6px;
@@ -395,8 +401,8 @@ h1 {
 
 .empty-state,
 .storage-status {
-    min-height: 1.4em;
-    margin: 12px 0 0;
+    min-height: 1em;
+    margin: 6px 0 0;
     color: var(--muted);
     font-size: 0.82rem;
     line-height: 1.5;
@@ -408,8 +414,9 @@ h1 {
 }
 
 .manage-area {
-    width: min(100%, 960px);
-    margin: 0 auto 60px;
+    width: min(100%, 620px);
+    margin: 0 auto 10px;
+    flex: 0 0 auto;
 }
 
 .manage-area details {
@@ -419,16 +426,13 @@ h1 {
 }
 
 .manage-area summary {
-    padding: 16px 20px;
+    padding: 10px 14px;
     color: var(--deep-green);
     cursor: pointer;
     font-weight: 700;
 }
 
-.manage-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-    gap: 24px;
+.manage-content {
     padding: 0 20px 22px;
 }
 
@@ -436,28 +440,59 @@ h1 {
     min-width: 0;
 }
 
+.manage-section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
 .manage-section h2 {
-    margin: 0 0 14px;
+    margin: 0;
     color: #23372d;
     font-family: "Playfair Display", Georgia, serif;
     font-size: 1.45rem;
     font-weight: 500;
 }
 
+.deck-management {
+    margin-top: 18px;
+}
+
+.deck-management-content {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    padding: 0 20px 20px;
+}
+
 .manage-form {
     display: grid;
     gap: 8px;
-    margin: 0 0 18px;
+    margin: 0;
     padding: 15px;
     border: 1px solid var(--line);
     border-radius: 6px;
     background: #fff;
 }
 
+.manage-form[hidden] {
+    display: none;
+}
+
 .manage-form h3 {
     margin: 0 0 4px;
     color: #34443b;
     font-size: 0.95rem;
+}
+
+.manage-help {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.78rem;
+    line-height: 1.45;
 }
 
 .manage-form label {
@@ -535,14 +570,14 @@ h1 {
 }
 
 .keyboard-hint {
-    margin: 19px 0 0;
+    margin: 10px 0 0;
     color: var(--muted);
     font-size: 0.78rem;
     text-align: center;
 }
 
 .app-footer {
-    min-height: 66px;
+    flex: 0 0 48px;
     border-top: 1px solid var(--line);
     color: #92988d;
     font-size: 0.58rem;
@@ -554,15 +589,15 @@ h1 {
     }
 
     .app-header {
-        height: 72px;
+        flex-basis: 58px;
     }
 
     .learning-area {
-        padding: 56px 0 60px;
+        padding: 12px 0 16px;
     }
 
     .intro {
-        margin-bottom: 28px;
+        margin-bottom: 14px;
     }
 
     .intro-copy {
@@ -590,11 +625,11 @@ h1 {
     }
 
     .flashcard {
-        min-height: 310px;
+        min-height: 240px;
     }
 
     .card-inner {
-        min-height: 310px;
+        min-height: 240px;
     }
 
     .card-face {
@@ -605,11 +640,19 @@ h1 {
         padding: 0 15px;
     }
 
+    .app-footer {
+        flex-basis: 44px;
+    }
+
     .card-controls {
         flex-wrap: wrap;
     }
 
-    .manage-grid {
+    .manage-content {
+        padding: 0 14px 16px;
+    }
+
+    .deck-management-content {
         grid-template-columns: 1fr;
         gap: 16px;
         padding: 0 14px 16px;
@@ -618,6 +661,42 @@ h1 {
     .managed-card-list li {
         align-items: flex-start;
         flex-direction: column;
+    }
+}
+
+@media (max-height: 760px) {
+    .app-header {
+        flex-basis: 56px;
+    }
+
+    .learning-area {
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    .intro {
+        margin-bottom: 10px;
+    }
+
+    .flashcard,
+    .card-inner {
+        min-height: clamp(190px, 30vh, 240px);
+    }
+
+    .card-controls {
+        margin-top: 8px;
+    }
+
+    .button {
+        min-height: 40px;
+    }
+
+    .keyboard-hint {
+        margin-top: 6px;
+    }
+
+    .app-footer {
+        flex-basis: 40px;
     }
 }
 

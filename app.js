@@ -35,6 +35,8 @@ const newDeckItem = document.querySelector("#new-deck-item");
 const renameDeckForm = document.querySelector("#rename-deck-form");
 const deckName = document.querySelector("#deck-name");
 const deleteDeckButton = document.querySelector("#delete-deck-button");
+const deckManagementDetails = document.querySelector("#deck-management-details");
+const addCardButton = document.querySelector("#add-card-button");
 const cardForm = document.querySelector("#card-form");
 const cardEnglish = document.querySelector("#card-english");
 const cardMalayalam = document.querySelector("#card-malayalam");
@@ -275,22 +277,24 @@ function moveCard(direction) {
 
 function startEditingCard(card) {
     editingCard = card;
+    cardForm.hidden = false;
+    addCardButton.hidden = true;
     cardEnglish.value = card.english;
     cardMalayalam.value = card.malayalam;
     cardTransliteration.value = card.transliteration;
     cardCategory.value = card.category;
     cardFormTitle.textContent = "Edit a card";
     saveCardButton.textContent = "Save card";
-    cancelCardEditButton.hidden = false;
     cardEnglish.focus();
 }
 
 function resetCardForm() {
     editingCard = null;
     cardForm.reset();
+    cardForm.hidden = true;
+    addCardButton.hidden = false;
     cardFormTitle.textContent = "Add a card";
     saveCardButton.textContent = "Add card";
-    cancelCardEditButton.hidden = true;
 }
 
 function deleteCard(card) {
@@ -313,6 +317,7 @@ moduleFilter.addEventListener("change", () => {
     categoryFilter.value = "All";
     cardSearch.value = "";
     shuffledOrder = null;
+    resetCardForm();
     setRevealed(false);
     persistState();
     renderAll();
@@ -375,12 +380,13 @@ createDeckForm.addEventListener("submit", (event) => {
     activeDeckId = id;
     shuffledOrder = null;
     createDeckForm.reset();
+    deckManagementDetails.open = false;
     categoryFilter.value = "All";
     cardSearch.value = "";
     setRevealed(false);
     persistState();
     renderAll();
-    document.querySelector("#card-english").focus();
+    addCardButton.focus();
 });
 
 renameDeckForm.addEventListener("submit", (event) => {
@@ -429,13 +435,24 @@ cardForm.addEventListener("submit", (event) => {
 
     shuffledOrder = null;
     resetCardForm();
+    addCardButton.focus();
     persistState();
     renderCategoryOptions();
     renderCard();
     renderManagedCards();
 });
 
-cancelCardEditButton.addEventListener("click", resetCardForm);
+cancelCardEditButton.addEventListener("click", () => {
+    resetCardForm();
+    addCardButton.focus();
+});
+addCardButton.addEventListener("click", () => {
+    cardForm.hidden = false;
+    addCardButton.hidden = true;
+    cardFormTitle.textContent = "Add a card";
+    saveCardButton.textContent = "Add card";
+    cardEnglish.focus();
+});
 
 renderAll();
 if (needsInitialSave) {

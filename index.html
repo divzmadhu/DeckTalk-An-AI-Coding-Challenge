@@ -83,33 +83,13 @@
         <section class="manage-area" aria-labelledby="manage-title">
             <details id="manage-details">
                 <summary id="manage-title">Manage decks and cards</summary>
-                <div class="manage-grid">
-                    <section class="manage-section" aria-labelledby="deck-management-title">
-                        <h2 id="deck-management-title">Decks</h2>
-                        <form id="create-deck-form" class="manage-form">
-                            <h3>Create a deck</h3>
-                            <label for="new-deck-name">Deck name</label>
-                            <input id="new-deck-name" name="name" required maxlength="60">
-                            <label for="new-deck-item">Card type</label>
-                            <select id="new-deck-item" name="item">
-                                <option value="word">Words</option>
-                                <option value="phrase">Phrases</option>
-                            </select>
-                            <button class="button button-primary" type="submit">Create deck</button>
-                        </form>
-
-                        <form id="rename-deck-form" class="manage-form">
-                            <h3>Rename selected deck</h3>
-                            <label for="deck-name">Deck name</label>
-                            <input id="deck-name" name="name" required maxlength="60">
-                            <button class="button button-secondary" type="submit">Save deck name</button>
-                            <button class="button button-danger" id="delete-deck-button" type="button">Delete deck</button>
-                        </form>
-                    </section>
-
+                <div class="manage-content">
                     <section class="manage-section" aria-labelledby="card-management-title">
-                        <h2 id="card-management-title">Cards in this deck</h2>
-                        <form id="card-form" class="manage-form">
+                        <div class="manage-section-heading">
+                            <h2 id="card-management-title">Cards in this deck</h2>
+                            <button class="button button-primary" id="add-card-button" type="button">Add a card</button>
+                        </div>
+                        <form id="card-form" class="manage-form" hidden>
                             <h3 id="card-form-title">Add a card</h3>
                             <label for="card-english">English (front)</label>
                             <textarea id="card-english" name="english" required maxlength="180"></textarea>
@@ -121,11 +101,37 @@
                             <input id="card-category" name="category" required maxlength="60">
                             <div class="form-actions">
                                 <button class="button button-primary" id="save-card-button" type="submit">Add card</button>
-                                <button class="button button-secondary" id="cancel-card-edit" type="button" hidden>Cancel edit</button>
+                                <button class="button button-secondary" id="cancel-card-edit" type="button">Cancel</button>
                             </div>
                         </form>
                         <ul class="managed-card-list" id="managed-card-list" aria-label="Cards in selected deck"></ul>
                     </section>
+
+                    <details class="deck-management" id="deck-management-details">
+                        <summary>Manage decks</summary>
+                        <div class="deck-management-content">
+                            <form id="create-deck-form" class="manage-form">
+                                <h3>Create a deck</h3>
+                                <label for="new-deck-name">Deck name</label>
+                                <input id="new-deck-name" name="name" required maxlength="60">
+                                <label for="new-deck-item">Card type</label>
+                                <select id="new-deck-item" name="item">
+                                    <option value="word">Words</option>
+                                    <option value="phrase">Phrases</option>
+                                </select>
+                                <button class="button button-primary" type="submit">Create deck</button>
+                            </form>
+
+                            <form id="rename-deck-form" class="manage-form">
+                                <h3>Rename selected deck</h3>
+                                <p class="manage-help">Choose a deck from the Deck selector above, then enter its new name.</p>
+                                <label for="deck-name">New deck name</label>
+                                <input id="deck-name" name="name" required maxlength="60">
+                                <button class="button button-secondary" type="submit">Save deck name</button>
+                                <button class="button button-danger" id="delete-deck-button" type="button">Delete deck</button>
+                            </form>
+                        </div>
+                    </details>
                 </div>
             </details>
         </section>

@@ -117,4 +117,8 @@ DeckTalk is built using lightweight, modern web technologies without heavy frame
 - Search now finds matching cards across every deck; category options and card labels identify cross-deck results, while browsing without a search remains limited to the selected deck.
 - Verified that searching for "bus" finds all three seeded bus cards from the Travel Conversations deck, including category filtering and reset to the selected deck.
 - Requirement decision: the lab describes keyword search/filter within a deck, but I am keeping cross-deck search for now because it feels more user-friendly. Revisit only if matching the lab specification exactly becomes a priority.
+- Management layout update: moved create/rename/delete deck actions into a collapsed "Manage decks" disclosure, using the existing Deck selector to choose the deck to rename. The card editor is hidden until Add a card or Edit is selected, and returns to the compact card list after save or cancel.
+- Verified card form visibility, card add/edit/cancel, deck selection/rename/create, persistence, and closing an open editor safely when switching decks.
+- Layout feedback: moved the "Manage decks and cards" entry directly below the page introduction and above study controls so it is immediately discoverable without scrolling past the flashcards. Reduced vertical padding and card height to keep core controls more compact; the detailed manager remains collapsible.
+- Follow-up layout preference: placed the collapsed manager below the study controls and above the footer. The study region now flexes to available viewport height, with compact header/footer spacing and viewport-aware card sizing; short/tall narrow screens can still scroll rather than clipping content.
 
