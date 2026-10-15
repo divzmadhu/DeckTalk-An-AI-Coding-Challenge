@@ -23,19 +23,18 @@
             </div>
 
             <div class="deck-toolbar">
-                <label for="module-filter">Module</label>
-                <select id="module-filter" aria-label="Choose a learning module">
-                    <option value="vocabulary">Core Vocabulary</option>
-                    <option value="conversations">Travel Conversations</option>
-                </select>
+                <label for="module-filter">Deck</label>
+                <select id="module-filter" aria-label="Choose a deck"></select>
+                <label class="search-label" for="card-search">Search all decks</label>
+                <input id="card-search" type="search" placeholder="Search all decks" aria-label="Search cards across all decks">
                 <label for="category-filter">Category</label>
-                <select id="category-filter" aria-label="Filter vocabulary by category">
+                <select id="category-filter" aria-label="Filter cards by category">
                     <option value="All">All categories</option>
                 </select>
                 <p class="progress" id="card-progress" aria-live="polite"></p>
             </div>
 
-            <article class="flashcard" aria-label="Flashcard">
+            <article class="flashcard" id="flashcard" aria-label="Flashcard">
                 <button class="card-content" id="reveal-button" type="button" aria-expanded="false" aria-label="Tap to reveal Malayalam translation">
                     <span class="card-inner">
                         <span class="card-face card-face-front" id="card-front" aria-hidden="false">
@@ -70,12 +69,65 @@
                     </span>
                 </button>
             </article>
+            <p class="empty-state" id="flashcard-status" aria-live="polite" hidden></p>
 
             <nav class="card-controls" aria-label="Flashcard navigation">
                 <button class="button button-secondary" id="previous-button" type="button">Previous</button>
+                <button class="button button-secondary" id="shuffle-button" type="button">Shuffle</button>
                 <button class="button button-primary" id="next-button" type="button">Next <span id="next-item-label">word</span> <span aria-hidden="true">→</span></button>
             </nav>
-            <p class="keyboard-hint">Take your time. There’s no rush to get it right.</p>
+            <p class="keyboard-hint">Use ← and → to move between cards. There’s no rush to get it right.</p>
+            <p class="storage-status" id="storage-status" aria-live="polite"></p>
+        </section>
+
+        <section class="manage-area" aria-labelledby="manage-title">
+            <details id="manage-details">
+                <summary id="manage-title">Manage decks and cards</summary>
+                <div class="manage-grid">
+                    <section class="manage-section" aria-labelledby="deck-management-title">
+                        <h2 id="deck-management-title">Decks</h2>
+                        <form id="create-deck-form" class="manage-form">
+                            <h3>Create a deck</h3>
+                            <label for="new-deck-name">Deck name</label>
+                            <input id="new-deck-name" name="name" required maxlength="60">
+                            <label for="new-deck-item">Card type</label>
+                            <select id="new-deck-item" name="item">
+                                <option value="word">Words</option>
+                                <option value="phrase">Phrases</option>
+                            </select>
+                            <button class="button button-primary" type="submit">Create deck</button>
+                        </form>
+
+                        <form id="rename-deck-form" class="manage-form">
+                            <h3>Rename selected deck</h3>
+                            <label for="deck-name">Deck name</label>
+                            <input id="deck-name" name="name" required maxlength="60">
+                            <button class="button button-secondary" type="submit">Save deck name</button>
+                            <button class="button button-danger" id="delete-deck-button" type="button">Delete deck</button>
+                        </form>
+                    </section>
+
+                    <section class="manage-section" aria-labelledby="card-management-title">
+                        <h2 id="card-management-title">Cards in this deck</h2>
+                        <form id="card-form" class="manage-form">
+                            <h3 id="card-form-title">Add a card</h3>
+                            <label for="card-english">English (front)</label>
+                            <textarea id="card-english" name="english" required maxlength="180"></textarea>
+                            <label for="card-malayalam">Malayalam (back)</label>
+                            <textarea id="card-malayalam" name="malayalam" required maxlength="240"></textarea>
+                            <label for="card-transliteration">Transliteration</label>
+                            <input id="card-transliteration" name="transliteration" required maxlength="180">
+                            <label for="card-category">Category</label>
+                            <input id="card-category" name="category" required maxlength="60">
+                            <div class="form-actions">
+                                <button class="button button-primary" id="save-card-button" type="submit">Add card</button>
+                                <button class="button button-secondary" id="cancel-card-edit" type="button" hidden>Cancel edit</button>
+                            </div>
+                        </form>
+                        <ul class="managed-card-list" id="managed-card-list" aria-label="Cards in selected deck"></ul>
+                    </section>
+                </div>
+            </details>
         </section>
 
         <footer class="app-footer">

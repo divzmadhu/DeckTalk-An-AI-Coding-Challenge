@@ -1,5 +1,6 @@
 const malayalamModules = {
     vocabulary: {
+        name: "Core Vocabulary",
         prompt: "HOW DO YOU SAY",
         item: "word",
         cards: [
@@ -31,6 +32,7 @@ const malayalamModules = {
         ]
     },
     conversations: {
+        name: "Travel Conversations",
         prompt: "HOW WOULD YOU SAY",
         item: "phrase",
         cards: [

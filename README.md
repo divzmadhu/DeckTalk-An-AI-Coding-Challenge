@@ -22,12 +22,9 @@ DeckTalk is built using lightweight, modern web technologies without heavy frame
 - **Logic:** Vanilla JavaScript (ES6+, DOM manipulation, event listeners)
 - **Data Format:** JSON / Local JavaScript objects for modular language packs
 
-[ Application Core Engine + Audio ] ── (Initial Launch) ──┬── [ Malayalam Language Pack (JSON + Audio) ]
-                                                          ├── [ Spanish Language Pack (JSON + Audio) ]
-                                                          └── [ French Language Pack (JSON + Audio) ]
 
 
-
+```text
 [ Application Core Engine ]
          │
          ├──► [ Malayalam Language Pack (JSON + Audio) ]  ── (Initial Launch)
@@ -35,7 +32,7 @@ DeckTalk is built using lightweight, modern web technologies without heavy frame
          └──► [ French Language Pack (JSON + Audio) ]     ── (Future Release)
 
 
-
+```
 ## 📂 Learning Modules (Phase 1)
 
 ### 🔹 Module 1: Core Vocabulary
@@ -108,5 +105,16 @@ DeckTalk is built using lightweight, modern web technologies without heavy frame
 - Moved the category badge and footer into both card faces so the whole card rotates, not only the center content.
 - Kept the prompt and translation centered within their respective card faces.
 
+### Step 9: Deck and card management
 
+- Added create, rename, and delete deck controls, plus add, edit, and delete card controls.
+- Save decks, cards, and the last active deck in this browser's LocalStorage.
+- Added keyword search across card text and transliteration, category filtering, shuffle, and left/right keyboard navigation.
+- This is a local single-browser authoring experience; data is not synced to another device or shared with other users.
+- Added an empty-state message for decks without cards and for searches with no matches.
+- Verified syntax, whitespace, and mock-DOM workflows for persistence/reload, search, shuffle, deck/card create/edit/delete, keyboard navigation, and reveal state.
+- The card faces now have their own surface styling so the entire visible card face participates in the flip.
+- Search now finds matching cards across every deck; category options and card labels identify cross-deck results, while browsing without a search remains limited to the selected deck.
+- Verified that searching for "bus" finds all three seeded bus cards from the Travel Conversations deck, including category filtering and reset to the selected deck.
+- Requirement decision: the lab describes keyword search/filter within a deck, but I am keeping cross-deck search for now because it feels more user-friendly. Revisit only if matching the lab specification exactly becomes a priority.
 
