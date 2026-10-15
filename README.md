@@ -48,5 +48,25 @@ DeckTalk is built using lightweight, modern web technologies without heavy frame
 
 ---
 
+### Implementation Details 
 
+### Step 1: Core Vocabulary
+
+- Added an English-to-Malayalam flashcard page with Essentials, Places, People, and Numbers categories.
+- Added category filtering, previous/next navigation, and reveal/hide behavior for Malayalam script and transliteration.
+- Added responsive styling for the vocabulary practice page.
+- Vocabulary is currently stored in a local JavaScript array.
+
+### Step 2: Basic Travel Conversations
+
+- Added a separate Travel Conversations deck with phrases for Greetings & Courtesy, Dining, Transport & Navigation, and Shopping & Bargaining.
+- Added a module selector so the Core Vocabulary deck remains available.
+- Updated the category selector and card prompts to match the selected deck.
+- Added phrase-specific responsive sizing for longer prompts.
+
+### Step 3: Review status
+
+- Fixed the reveal control so Malayalam translations stay hidden until selected.
+- Simplified the card action label to "Tap to reveal" / "Tap to hide".
+- Audio playback, offline caching, and additional language packs have not been implemented yet.
 

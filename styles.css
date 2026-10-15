@@ -117,6 +117,7 @@ h1 {
 .deck-toolbar {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 10px;
     margin-bottom: 12px;
     color: var(--muted);
@@ -171,11 +172,6 @@ h1 {
     letter-spacing: 0.04em;
 }
 
-.card-hint {
-    color: #a3a69b;
-    font-size: 0.6rem;
-}
-
 .card-content {
     display: flex;
     min-height: 190px;
@@ -205,12 +201,23 @@ h1 {
     line-height: 1.15;
 }
 
+.word-prompt.is-phrase {
+    max-width: 100%;
+    font-size: clamp(1.55rem, 4.5vw, 2.5rem);
+    letter-spacing: -0.025em;
+    overflow-wrap: anywhere;
+}
+
 .translation {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 5px;
     margin-top: 19px;
+}
+
+.translation[hidden] {
+    display: none;
 }
 
 .malayalam-word {
@@ -324,6 +331,22 @@ h1 {
 
     .intro-copy {
         font-size: 0.88rem;
+    }
+
+    .deck-toolbar {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto minmax(0, 1fr);
+        gap: 8px;
+    }
+
+    .deck-toolbar select {
+        min-width: 0;
+        padding: 0 6px;
+    }
+
+    .progress {
+        grid-column: 4;
+        justify-self: end;
     }
 
     .flashcard {

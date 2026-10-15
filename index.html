@@ -22,13 +22,14 @@
             </div>
 
             <div class="deck-toolbar">
-                <label for="category-filter">Practice</label>
+                <label for="module-filter">Module</label>
+                <select id="module-filter" aria-label="Choose a learning module">
+                    <option value="vocabulary">Core Vocabulary</option>
+                    <option value="conversations">Travel Conversations</option>
+                </select>
+                <label for="category-filter">Category</label>
                 <select id="category-filter" aria-label="Filter vocabulary by category">
-                    <option value="All">All words</option>
-                    <option value="Essentials">Essentials</option>
-                    <option value="Places">Places</option>
-                    <option value="People">People</option>
-                    <option value="Numbers">Numbers</option>
+                    <option value="All">All categories</option>
                 </select>
                 <p class="progress" id="card-progress" aria-live="polite"></p>
             </div>
@@ -36,16 +37,15 @@
             <article class="flashcard" aria-labelledby="word-prompt">
                 <div class="card-topline">
                     <span class="card-category" id="card-category"></span>
-                    <span class="card-hint">TAP TO REVEAL</span>
                 </div>
                 <button class="card-content" id="reveal-button" type="button" aria-expanded="false">
-                    <span class="word-label">HOW DO YOU SAY</span>
+                    <span class="word-label" id="word-label">HOW DO YOU SAY</span>
                     <span class="word-prompt" id="word-prompt"></span>
                     <span class="translation" id="translation" hidden>
                         <span class="malayalam-word" id="malayalam-word" lang="ml"></span>
                         <span class="transliteration" id="transliteration"></span>
                     </span>
-                    <span class="reveal-copy" id="reveal-copy">Reveal the Malayalam</span>
+                    <span class="reveal-copy" id="reveal-copy">Tap to reveal</span>
                 </button>
                 <div class="card-bottomline">
                     <span>ENGLISH <span aria-hidden="true">→</span> MALAYALAM</span>
@@ -55,7 +55,7 @@
 
             <nav class="card-controls" aria-label="Flashcard navigation">
                 <button class="button button-secondary" id="previous-button" type="button">Previous</button>
-                <button class="button button-primary" id="next-button" type="button">Next word <span aria-hidden="true">→</span></button>
+                <button class="button button-primary" id="next-button" type="button">Next <span id="next-item-label">word</span> <span aria-hidden="true">→</span></button>
             </nav>
             <p class="keyboard-hint">Take your time. There’s no rush to get it right.</p>
         </section>
