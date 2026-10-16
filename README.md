@@ -1,3 +1,17 @@
+### Reflection 
+
+1. Where AI saved time: 
+- It sped up building deck/card management, LocalStorage persistence, search, and UI refinements.
+2. AI bug found and fixed: 
+- Arrow-key navigation could interfere with other controls; I restricted it to flashcard navigation.
+3. Code clarified: 
+- The keyboard handler now uses an early-return guard before handling arrow keys: if (isManaging || helpDialog.open || headerMenu.open) return;
+4. Accessibility improvement: 
+- Escape closes Help & About and returns focus to the control that opened it.
+5. What improved AI output: 
+- Clearer requirements, asking for one module at a time, and giving specific feedback helped keep changes focused and consistent.
+
+
 # 🎴 DeckTalk
 
 > **A traveler-focused language flashcard app designed to break communication barriers on the go.**
